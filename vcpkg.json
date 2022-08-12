@@ -3,6 +3,11 @@
   "version-string": "0.0.1",
   "dependencies": [
     "pybind11",
-    "python3"
+    "python3",
+    "opengl",
+    "glfw3",
+    "glad",
+    "glm",
+    "stb"
   ]
 }

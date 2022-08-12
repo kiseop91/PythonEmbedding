@@ -4,10 +4,20 @@ project(Application)
 set(TargetName Application)
 
 find_package(Python 3.10 COMPONENTS Interpreter Development REQUIRED)
+find_package(glad CONFIG REQUIRED)
+find_package(glfw3 CONFIG REQUIRED)
+find_package(glm CONFIG REQUIRED)
+find_path(STB_INCLUDE_DIRS "stb_c_lexer.h")
 
 add_executable(${TargetName} src/main.cpp)
-target_link_libraries(${TargetName} PUBLIC pyInterpreter)
 
+target_link_libraries(${TargetName} PRIVATE glfw)
+target_link_libraries(${TargetName} PRIVATE glad::glad)
+target_link_libraries(${TargetName} PUBLIC pyInterpreter)
+target_link_libraries(${TargetName} PRIVATE glm::glm)
+
+target_include_directories(${TargetName} PRIVATE ${STB_INCLUDE_DIRS})
+target_include_directories(${TargetName} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 if(WIN32)
     add_custom_command(TARGET ${TargetName} POST_BUILD 
