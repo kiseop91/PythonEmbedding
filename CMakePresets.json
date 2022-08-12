@@ -1,0 +1,103 @@
+{
+  "version": 3,
+  "configurePresets": [
+    {
+      "name": "M1-Mac-arm64-Release",
+      "displayName": "M1-Mac-arm64-Release",
+      "description": "Using compilers: C = /usr/bin/clang, CXX = /usr/bin/clang++",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "cmakeExecutable": "/usr/local/bin/cmake",
+      "generator": "Xcode",
+      "cacheVariables": {
+        "CMAKE_OSX_ARCHITECTURES": "arm64",
+        "CMAKE_INSTALL_PREFIX": "${sourceDir}/build/install/${presetName}",
+        "CMAKE_C_COMPILER": "/usr/bin/clang",
+        "CMAKE_CXX_COMPILER": "/usr/bin/clang++",
+        "CMAKE_TOOLCHAIN_FILE": {
+          "type": "FILEPATH",
+          "value": "~/vcpkg/scripts/buildsystems/vcpkg.cmake"
+        },
+        "VCPKG_TARGET_TRIPLET": "arm64-osx",
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    },
+    {
+      "name": "M1-Mac-arm64-Debug",
+      "displayName": "M1-Mac-arm64-Debug",
+      "description": "Using compilers: C = /usr/bin/clang, CXX = /usr/bin/clang++",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "cmakeExecutable": "/usr/local/bin/cmake",
+      "generator": "Xcode",
+      "cacheVariables": {
+        "CMAKE_OSX_ARCHITECTURES": "arm64",
+        "CMAKE_INSTALL_PREFIX": "${sourceDir}/build/install/${presetName}",
+        "CMAKE_C_COMPILER": "/usr/bin/clang",
+        "CMAKE_CXX_COMPILER": "/usr/bin/clang++",
+        "CMAKE_TOOLCHAIN_FILE": {
+          "type": "FILEPATH",
+          "value": "~/vcpkg/scripts/buildsystems/vcpkg.cmake"
+        },
+        "VCPKG_TARGET_TRIPLET": "arm64-osx",
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
+    },
+    {
+      "name": "vs2017-AMDx64-Release",
+      "displayName": "vs2017 AMD:x64-Release",
+      "description": "Using compilers for Visual Studio 15 2017 (x64 architecture)",
+      "generator": "Visual Studio 15 2017",
+      "toolset": "host=x64",
+      "architecture": "x64",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "cacheVariables": {
+        "CMAKE_INSTALL_PREFIX": "${sourceDir}/build/install/${presetName}",
+        "CMAKE_TOOLCHAIN_FILE": {
+          "type": "FILEPATH",
+          "value": "vcpkg/scripts/buildsystems/vcpkg.cmake"
+        },
+        "VCPKG_TARGET_TRIPLET": "x64-windows",
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    },
+    {
+      "name": "vs2017-AMDx64-Debug",
+      "displayName": "vs2017 AMD:x64-Debug",
+      "description": "Using compilers for Visual Studio 15 2017 (x64 architecture)",
+      "generator": "Visual Studio 15 2017",
+      "toolset": "host=x64",
+      "architecture": "x64",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "cacheVariables": {
+        "CMAKE_INSTALL_PREFIX": "${sourceDir}/build/install/${presetName}",
+        "CMAKE_TOOLCHAIN_FILE": {
+          "type": "FILEPATH",
+          "value": "vcpkg/scripts/buildsystems/vcpkg.cmake"
+        },
+        "VCPKG_TARGET_TRIPLET": "x64-windows",
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "win-release",
+      "configurePreset": "vs2017-AMDx64-Release",
+      "configuration": "Release"
+    },
+    {
+      "name": "win-debug",
+      "configurePreset": "vs2017-AMDx64-Debug",
+      "configuration": "Debug"
+    },
+    {
+      "name": "mac-release",
+      "configurePreset": "M1-Mac-arm64-Release",
+      "configuration": "Release"
+    },
+    {
+      "name": "mac-debug",
+      "configurePreset": "M1-Mac-arm64-Debug",
+      "configuration": "Debug"
+    }
+  ]
+}
