@@ -14,7 +14,34 @@
 
 #include <shader_s.h>
 
+/////// Pybind1 //////////////////////
+#include <pybind11/embed.h>
+namespace py = pybind11;
 
+PYBIND11_EMBEDDED_MODULE(fast_calc, m) {
+    m.def("add", [](int i, int j) {
+        return i + j;
+    });
+}
+
+float speed = 0.f;
+float position_x, position_y;
+
+PYBIND11_EMBEDDED_MODULE(game_api, m) {
+    m.def("up_speed", [&](float i) {
+        speed += i;
+    });
+
+    m.def("move_x", [&](float i) {
+        position_x += i;
+    });
+
+    m.def("move_y", [&](float i) {
+        position_y += i;
+    });
+}
+
+////////////////////////////////////////////
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
 
@@ -170,10 +197,13 @@ int main()
         glActiveTexture(GL_TEXTURE1);
         glBindTexture(GL_TEXTURE_2D, texture2);
 
+        PyInterpreter py;
+        py.RunScript("../../../../Application/pythonScripts/sample.py");
+
         // create transformations
         glm::mat4 transform = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
-        transform = glm::translate(transform, glm::vec3(0.0f, 0.0f, 0.0f));
-        transform = glm::rotate(transform, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
+        transform = glm::translate(transform, glm::vec3(position_x, position_y, 0.0f));
+        transform = glm::rotate(transform, speed + (float)glfwGetTime() , glm::vec3(0.0f, 0.0f, 1.0f));
 
         // get matrix's uniform location and set matrix
         ourShader.use();
@@ -211,8 +241,9 @@ void processInput(GLFWwindow *window)
 
     if (glfwGetKey(window, GLFW_KEY_R)== GLFW_PRESS)
         {
-            PyInterpreter py;
-            py.RunScript("../../../../Application/pythonScripts/sample.py");
+            position_x = 0.f;
+            position_y = 0.f;
+            speed = 0.f;
         }
 }
 
